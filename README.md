@@ -155,5 +155,7 @@ Dylan Lawless, Ali Saadat, Mariam Ait Oumelloul, Simon Boutry, Veronika Stadler,
 }
 ```
 
+The following article also inspired the standardisation of QV:  
 
+Povysil, G., Petrovski, S., Hostyk, J. et al. **Rare-variant collapsing analyses for complex traits: guidelines and applications**. *Nat Rev Genet* 20, 747–759 (2019). <https://doi.org/10.1038/s41576-019-0177-4>.
 
