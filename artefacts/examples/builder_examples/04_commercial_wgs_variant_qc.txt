@@ -1,0 +1,15 @@
+meta qv_set_id="example_commercial_wgs_variant_qc"
+meta version="1.0.0"
+meta title="Commercial WGS variant QC"
+meta status="active"
+filter sufficient_quality field=QUAL operator=">=" value=30 desc="Minimum site quality"
+filter sufficient_depth field=DP operator=">=" value=10 desc="Minimum sample depth"
+filter sufficient_genotype_quality field=GQ operator=">=" value=20 desc="Minimum genotype quality"
+criteria no_failed_filter logic=not desc="Variant must not contain a failed VCF filter flag"
+criteria no_failed_filter field=FILTER operator="contains" value=FAIL missing=fail
+criteria final_qualification logic=and desc="Commercial WGS variant QC qualification"
+criteria final_qualification ref=sufficient_quality
+criteria final_qualification ref=sufficient_depth
+criteria final_qualification ref=sufficient_genotype_quality
+criteria final_qualification ref=no_failed_filter
+note "DP and GQ are per-sample FORMAT fields. Declare field paths in the publication QVSS file."

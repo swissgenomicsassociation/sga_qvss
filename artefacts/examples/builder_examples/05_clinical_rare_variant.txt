@@ -1,0 +1,13 @@
+meta qv_set_id="example_clinical_rare_variant"
+meta version="1.0.0"
+meta title="Clinical rare variant qualification"
+meta status="active"
+filter rare field=gnomAD_AF operator="<" value=0.001 desc="Rare in population reference data"
+criteria protein_altering field=consequence_terms operator="contains" value=missense_variant desc="Contains a protein-altering consequence term"
+criteria not_low_confidence logic=not desc="Variant must not contain a low confidence clinical flag"
+criteria not_low_confidence field=clinical_flags operator="contains" value=low_confidence missing=fail
+criteria final_qualification logic=and desc="Rare protein-altering variant without low-confidence flag"
+criteria final_qualification ref=rare
+criteria final_qualification ref=protein_altering
+criteria final_qualification ref=not_low_confidence
+note "This example is not a clinical interpretation or reportability rule."

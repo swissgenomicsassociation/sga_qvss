@@ -1,0 +1,44 @@
+qvss_version: "1.0"
+qv_set_id: "example_compound_het_profile"
+version: "1.0.0"
+title: "Compound heterozygosity aggregation example"
+status: "active"
+
+profiles:
+  - id: "https://qvss.org/profiles/aggregation/1.0"
+    name: "qvss-aggregation"
+    version: "1.0.0"
+
+inputs:
+  fields:
+    sample:
+      source: "implementation"
+      datatype: "string"
+      cardinality: "single"
+      missing: "error"
+    gene:
+      source: "annotation"
+      path: "SYMBOL"
+      datatype: "string"
+      cardinality: "single"
+      missing: "unknown"
+    allele_origin:
+      source: "phasing"
+      datatype: "enum"
+      cardinality: "single"
+      missing: "unknown"
+
+rules:
+  possible_compound_heterozygous:
+    type: "aggregation"
+    description: "At least two qualifying records grouped by sample and gene, with compatible allele origin."
+    group_by:
+      - "sample"
+      - "gene"
+    count:
+      operator: ">="
+      value: 2
+    missing: "unknown"
+
+qualification:
+  rule: "possible_compound_heterozygous"

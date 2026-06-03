@@ -1,0 +1,73 @@
+qvss_version: "1.0"
+qv_set_id: "example_cnv_sv_qc"
+version: "1.0.0"
+title: "CNV and structural variant QC example"
+status: "active"
+
+inputs:
+  fields:
+    SVTYPE:
+      source: "VCF"
+      path: "INFO/SVTYPE"
+      datatype: "enum"
+      cardinality: "single"
+      missing: "unknown"
+    SVLEN:
+      source: "VCF"
+      path: "INFO/SVLEN"
+      datatype: "integer"
+      cardinality: "single"
+      missing: "unknown"
+    QUAL:
+      source: "VCF"
+      path: "QUAL"
+      datatype: "number"
+      cardinality: "single"
+      missing: "unknown"
+    sv_flags:
+      source: "implementation"
+      datatype: "list"
+      cardinality: "single"
+      missing: "fail"
+
+rules:
+  recognised_sv_type:
+    field: "SVTYPE"
+    operator: "in"
+    value:
+      - "DEL"
+      - "DUP"
+      - "INV"
+      - "INS"
+    datatype: "enum"
+    missing: "unknown"
+  minimum_sv_length:
+    field: "SVLEN"
+    operator: ">="
+    value: 50
+    datatype: "integer"
+    missing: "unknown"
+  sufficient_sv_quality:
+    field: "QUAL"
+    operator: ">="
+    value: 20
+    datatype: "number"
+    missing: "unknown"
+  not_blacklisted:
+    logic: "not"
+    conditions:
+      - field: "sv_flags"
+        operator: "contains"
+        value: "blacklisted_region"
+        datatype: "list"
+        missing: "fail"
+  final_qualification:
+    logic: "all_of"
+    conditions:
+      - ref: "recognised_sv_type"
+      - ref: "minimum_sv_length"
+      - ref: "sufficient_sv_quality"
+      - ref: "not_blacklisted"
+
+qualification:
+  rule: "final_qualification"

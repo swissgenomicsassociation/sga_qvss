@@ -1,0 +1,12 @@
+meta qv_set_id="example_compound_het_profile"
+meta version="1.0.0"
+meta title="Compound heterozygosity profile example"
+meta status="active"
+criteria rare field=gnomAD_AF operator="<" value=0.001 desc="Rare in population reference data"
+criteria damaging field=consequence_terms operator="contains" value=protein_altering desc="Protein-altering consequence"
+criteria possible_compound_het group_by=sample,SYMBOL count=">=2" desc="At least two qualifying records grouped by sample and gene"
+criteria final_qualification logic=and desc="Possible compound heterozygous qualification"
+criteria final_qualification ref=rare
+criteria final_qualification ref=damaging
+criteria final_qualification ref=possible_compound_het
+note "Aggregation semantics require a declared QVSS aggregation profile."

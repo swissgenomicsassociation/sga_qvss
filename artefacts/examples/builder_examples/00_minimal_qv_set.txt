@@ -1,0 +1,6 @@
+meta qv_set_id="example_minimal_qv_set"
+meta version="1.0.0"
+meta title="Minimal QV set"
+meta status="active"
+filter minimum_quality field=quality operator=">=" value=20 desc="Variant has sufficient quality"
+note "Generated from QV builder authoring syntax. Normalise to QVSS 1.0 before registry publication."

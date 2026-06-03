@@ -1,0 +1,15 @@
+meta qv_set_id="example_cnv_sv_qc"
+meta version="1.0.0"
+meta title="CNV and structural variant QC example"
+meta status="active"
+filter sufficient_sv_quality field=SV_QUAL operator=">=" value=30 desc="Minimum structural variant quality"
+filter sufficient_support field=SUPPORTING_READS operator=">=" value=5 desc="Minimum supporting reads"
+filter minimum_size field=SVLEN_ABS operator=">=" value=50 desc="Minimum absolute structural variant length"
+criteria not_common_artifact logic=not desc="Structural variant must not contain a common artefact flag"
+criteria not_common_artifact field=SV_FLAGS operator="contains" value=common_artifact missing=fail
+criteria final_qualification logic=and desc="CNV or SV QC qualification"
+criteria final_qualification ref=sufficient_sv_quality
+criteria final_qualification ref=sufficient_support
+criteria final_qualification ref=minimum_size
+criteria final_qualification ref=not_common_artifact
+note "SV fields and caller-specific semantics should be declared by a profile or field map."

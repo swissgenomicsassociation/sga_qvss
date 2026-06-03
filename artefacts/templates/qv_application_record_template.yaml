@@ -1,0 +1,15 @@
+qv_application:
+  qv_set_id: "example_minimal_qv_set"
+  qv_set_version: "1.0.0"
+  qvss_version: "1.0"
+  qv_set_checksum_sha256: ""
+  checksum_type: "file-bytes"
+  applied_at: "2026-01-01T00:00:00Z"
+  implementation:
+    name: "example implementation"
+    version: "1.0.0"
+  profiles: []
+  extensions: []
+  input_data:
+    dataset_id: ""
+    checksum_sha256: ""

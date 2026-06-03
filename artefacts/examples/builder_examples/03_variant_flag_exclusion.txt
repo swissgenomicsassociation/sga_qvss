@@ -1,0 +1,7 @@
+meta qv_set_id="example_variant_flag_exclusion"
+meta version="1.0.0"
+meta title="Variant flag exclusion example"
+meta status="active"
+criteria no_low_confidence_flag logic=not desc="Variant must not contain a low confidence flag"
+criteria no_low_confidence_flag field=FILTER operator="contains" value=low_confidence missing=fail
+note "This demonstrates must-not-contain using logic=not around operator=contains."

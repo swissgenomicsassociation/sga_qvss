@@ -1,0 +1,15 @@
+meta qv_set_id="qv_gwas_common_v1_20250827"
+meta version="1.0.0"
+meta title="GWAS common QC"
+meta description="Common GWAS criteria expressed in tool-agnostic form"
+meta created="2025-08-27"
+meta authors=Alice,Bob
+meta tags=GWAS,QC,PCA
+filter maf_minimum field=MAF operator=">=" value=0.01 desc="Minimum minor allele frequency"
+filter hwe_minimum field=HWE_P operator=">=" value=1e-6 desc="Minimum Hardy-Weinberg equilibrium p value"
+filter call_rate_minimum field=CALL_RATE operator=">=" value=0.95 desc="Minimum variant call rate"
+criteria final_qualification logic=and desc="Common GWAS QC qualification"
+criteria final_qualification ref=maf_minimum
+criteria final_qualification ref=hwe_minimum
+criteria final_qualification ref=call_rate_minimum
+note "This example records QC criteria only. It does not define association testing."

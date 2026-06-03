@@ -1,0 +1,28 @@
+{
+  "qv_set_id": "example_minimal_qv_set",
+  "records": [
+    {
+      "record_id": "v1",
+      "quality": 30,
+      "expected_rule_outcomes": {
+        "minimum_quality": true
+      },
+      "expected_qualification": true
+    },
+    {
+      "record_id": "v2",
+      "quality": 10,
+      "expected_rule_outcomes": {
+        "minimum_quality": false
+      },
+      "expected_qualification": false
+    },
+    {
+      "record_id": "v3",
+      "expected_rule_outcomes": {
+        "minimum_quality": "unknown"
+      },
+      "expected_qualification": "unknown"
+    }
+  ]
+}

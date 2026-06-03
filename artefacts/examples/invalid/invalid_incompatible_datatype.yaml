@@ -1,0 +1,18 @@
+qvss_version: "1.0"
+qv_set_id: "invalid_incompatible_datatype"
+version: "1.0.0"
+title: "Invalid incompatible datatype"
+
+rules:
+  broken_rule:
+    field: "quality"
+    operator: ">="
+    value: "twenty"
+    datatype: "number"
+    missing: "unknown"
+
+qualification:
+  rule: "broken_rule"
+
+notes:
+  - "This may pass structural schema validation, but fails semantic conformance because a numeric comparison uses a non-numeric value."

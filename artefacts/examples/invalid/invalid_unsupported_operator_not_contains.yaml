@@ -1,0 +1,18 @@
+qvss_version: "1.0"
+qv_set_id: "invalid_unsupported_operator_not_contains"
+version: "1.0.0"
+title: "Invalid unsupported operator"
+
+rules:
+  broken_rule:
+    field: "FILTER"
+    operator: "not_contains"
+    value: "FAIL"
+    datatype: "list"
+    missing: "fail"
+
+qualification:
+  rule: "broken_rule"
+
+notes:
+  - "Use logic: not with operator: contains instead."

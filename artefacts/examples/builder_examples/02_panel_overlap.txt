@@ -1,0 +1,6 @@
+meta qv_set_id="example_panel_overlap"
+meta version="1.0.0"
+meta title="Panel overlap example"
+meta status="active"
+filter within_panel field=OVERLAP(targets.disease_panel.bed) operator=">=" value=1 logic=keep_if desc="Variant overlaps the declared disease panel resource"
+note "The BED resource, reference assembly, interval convention, and checksum should be declared in the publication QVSS file."

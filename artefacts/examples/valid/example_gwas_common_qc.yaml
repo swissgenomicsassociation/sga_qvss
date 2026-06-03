@@ -1,0 +1,64 @@
+qvss_version: "1.0"
+qv_set_id: "qv_gwas_common_v1_20250827"
+version: "1.0.0"
+title: "GWAS common QC"
+description: "Common GWAS criteria expressed in tool-agnostic form."
+created: "2025-08-27"
+authors:
+  - "Alice"
+  - "Bob"
+tags:
+  - "GWAS"
+  - "QC"
+  - "PCA"
+status: "active"
+
+inputs:
+  fields:
+    MAF:
+      source: "PLINK"
+      datatype: "number"
+      cardinality: "single"
+      missing: "unknown"
+    HWE_P:
+      source: "PLINK"
+      datatype: "number"
+      cardinality: "single"
+      missing: "unknown"
+    CALL_RATE:
+      source: "PLINK"
+      datatype: "number"
+      cardinality: "single"
+      missing: "unknown"
+
+rules:
+  maf_minimum:
+    field: "MAF"
+    operator: ">="
+    value: 0.01
+    datatype: "number"
+    missing: "unknown"
+  hwe_minimum:
+    field: "HWE_P"
+    operator: ">="
+    value: 0.000001
+    datatype: "number"
+    missing: "unknown"
+  call_rate_minimum:
+    field: "CALL_RATE"
+    operator: ">="
+    value: 0.95
+    datatype: "number"
+    missing: "unknown"
+  final_qualification:
+    logic: "all_of"
+    conditions:
+      - ref: "maf_minimum"
+      - ref: "hwe_minimum"
+      - ref: "call_rate_minimum"
+
+qualification:
+  rule: "final_qualification"
+
+notes:
+  - "This example records QC criteria only. It does not define association testing."

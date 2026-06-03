@@ -1,0 +1,39 @@
+qvss_version: "1.0"
+qv_set_id: "example_panel_overlap"
+version: "1.0.0"
+title: "Panel overlap example"
+status: "active"
+
+profiles:
+  - id: "https://qvss.org/profiles/genomic-interval/1.0"
+    name: "qvss-genomic-interval"
+    version: "1.0.0"
+
+inputs:
+  fields:
+    locus:
+      source: "VCF"
+      path: "CHROM:POS:REF:ALT"
+      datatype: "object"
+      cardinality: "single"
+      missing: "error"
+  resources:
+    disease_panel:
+      type: "bed"
+      source: "../../resources/disease_panel_example.bed"
+      reference: "GRCh38"
+      interval_convention: "0-based half-open"
+      minimum_overlap_bp: 1
+      checksum_sha256: "8546eb796cb01c3e2b561e04267787885adf1f60bb54d9dbc1ad20ead49563d1"
+
+rules:
+  within_panel:
+    field: "locus"
+    operator: "overlaps"
+    value:
+      resource: "disease_panel"
+    datatype: "object"
+    missing: "error"
+
+qualification:
+  rule: "within_panel"

@@ -1,0 +1,66 @@
+qvss_version: "1.0"
+qv_set_id: "example_wgs_sample_qc"
+version: "1.0.0"
+title: "WGS sample QC qualification"
+status: "active"
+
+inputs:
+  fields:
+    mean_depth:
+      source: "sample_qc"
+      datatype: "number"
+      cardinality: "sample"
+      missing: "error"
+    pct_genome_20x:
+      source: "sample_qc"
+      datatype: "number"
+      cardinality: "sample"
+      missing: "error"
+    contamination:
+      source: "sample_qc"
+      datatype: "number"
+      cardinality: "sample"
+      missing: "error"
+    sample_flags:
+      source: "sample_qc"
+      datatype: "list"
+      cardinality: "sample"
+      missing: "fail"
+
+rules:
+  sufficient_mean_depth:
+    field: "mean_depth"
+    operator: ">="
+    value: 30
+    datatype: "number"
+    missing: "error"
+  sufficient_20x_coverage:
+    field: "pct_genome_20x"
+    operator: ">="
+    value: 0.95
+    datatype: "number"
+    missing: "error"
+  low_contamination:
+    field: "contamination"
+    operator: "<="
+    value: 0.03
+    datatype: "number"
+    missing: "error"
+  no_sample_failure_flag:
+    logic: "not"
+    conditions:
+      - field: "sample_flags"
+        operator: "contains"
+        value: "sample_swap_suspected"
+        datatype: "list"
+        missing: "fail"
+  final_qualification:
+    logic: "all_of"
+    conditions:
+      - ref: "sufficient_mean_depth"
+      - ref: "sufficient_20x_coverage"
+      - ref: "low_contamination"
+      - ref: "no_sample_failure_flag"
+
+qualification:
+  rule: "final_qualification"

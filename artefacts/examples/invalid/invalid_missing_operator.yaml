@@ -1,0 +1,14 @@
+qvss_version: "1.0"
+qv_set_id: "invalid_missing_operator"
+version: "1.0.0"
+title: "Invalid missing operator"
+
+rules:
+  broken_rule:
+    field: "quality"
+    value: 20
+    datatype: "number"
+    missing: "unknown"
+
+qualification:
+  rule: "broken_rule"

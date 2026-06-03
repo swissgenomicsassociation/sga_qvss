@@ -1,0 +1,70 @@
+qvss_version: "1.0"
+qv_set_id: "example_commercial_wgs_variant_qc"
+version: "1.0.0"
+title: "Commercial WGS variant QC"
+status: "active"
+
+inputs:
+  fields:
+    QUAL:
+      source: "VCF"
+      path: "QUAL"
+      datatype: "number"
+      cardinality: "single"
+      missing: "unknown"
+    DP:
+      source: "VCF"
+      path: "FORMAT/DP"
+      datatype: "integer"
+      cardinality: "per_sample"
+      missing: "unknown"
+    GQ:
+      source: "VCF"
+      path: "FORMAT/GQ"
+      datatype: "integer"
+      cardinality: "per_sample"
+      missing: "unknown"
+    FILTER:
+      source: "VCF"
+      path: "FILTER"
+      datatype: "list"
+      cardinality: "single"
+      missing: "fail"
+
+rules:
+  sufficient_quality:
+    field: "QUAL"
+    operator: ">="
+    value: 30
+    datatype: "number"
+    missing: "unknown"
+  sufficient_depth:
+    field: "DP"
+    operator: ">="
+    value: 10
+    datatype: "integer"
+    missing: "unknown"
+  sufficient_genotype_quality:
+    field: "GQ"
+    operator: ">="
+    value: 20
+    datatype: "integer"
+    missing: "unknown"
+  no_failed_filter:
+    logic: "not"
+    conditions:
+      - field: "FILTER"
+        operator: "contains"
+        value: "FAIL"
+        datatype: "list"
+        missing: "fail"
+  final_qualification:
+    logic: "all_of"
+    conditions:
+      - ref: "sufficient_quality"
+      - ref: "sufficient_depth"
+      - ref: "sufficient_genotype_quality"
+      - ref: "no_failed_filter"
+
+qualification:
+  rule: "final_qualification"

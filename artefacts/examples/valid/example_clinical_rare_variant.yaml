@@ -1,0 +1,56 @@
+qvss_version: "1.0"
+qv_set_id: "example_clinical_rare_variant"
+version: "1.0.0"
+title: "Clinical rare variant qualification"
+status: "active"
+
+inputs:
+  fields:
+    gnomAD_AF:
+      source: "VEP"
+      path: "CSQ.gnomAD_AF"
+      datatype: "number"
+      cardinality: "single"
+      missing: "unknown"
+    consequence_terms:
+      source: "VEP"
+      path: "CSQ.Consequence"
+      datatype: "list"
+      cardinality: "per_transcript"
+      missing: "unknown"
+    clinical_flags:
+      source: "implementation"
+      datatype: "list"
+      cardinality: "single"
+      missing: "fail"
+
+rules:
+  rare:
+    field: "gnomAD_AF"
+    operator: "<"
+    value: 0.001
+    datatype: "number"
+    missing: "unknown"
+  protein_altering:
+    field: "consequence_terms"
+    operator: "contains"
+    value: "missense_variant"
+    datatype: "list"
+    missing: "unknown"
+  not_low_confidence:
+    logic: "not"
+    conditions:
+      - field: "clinical_flags"
+        operator: "contains"
+        value: "low_confidence"
+        datatype: "list"
+        missing: "fail"
+  final_qualification:
+    logic: "all_of"
+    conditions:
+      - ref: "rare"
+      - ref: "protein_altering"
+      - ref: "not_low_confidence"
+
+qualification:
+  rule: "final_qualification"

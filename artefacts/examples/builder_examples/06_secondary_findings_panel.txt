@@ -1,0 +1,15 @@
+meta qv_set_id="example_secondary_findings_panel"
+meta version="1.0.0"
+meta title="Secondary findings panel qualification"
+meta status="active"
+filter in_secondary_findings_gene field=gene operator="in" value=secondary_findings_genes desc="Gene is in the declared secondary findings gene list"
+criteria pathogenic_or_likely_pathogenic logic=or desc="Laboratory classification is pathogenic or likely pathogenic"
+criteria pathogenic_or_likely_pathogenic field=classification operator="==" value=P
+criteria pathogenic_or_likely_pathogenic field=classification operator="==" value=LP
+criteria not_suppressed logic=not desc="Variant must not be suppressed from report"
+criteria not_suppressed field=report_flags operator="contains" value=suppress_from_report missing=fail
+criteria final_qualification logic=and desc="Secondary findings qualification"
+criteria final_qualification ref=in_secondary_findings_gene
+criteria final_qualification ref=pathogenic_or_likely_pathogenic
+criteria final_qualification ref=not_suppressed
+note "Declare the gene list resource, version, and checksum in the publication QVSS file."

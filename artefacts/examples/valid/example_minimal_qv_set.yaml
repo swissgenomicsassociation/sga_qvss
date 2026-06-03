@@ -1,0 +1,24 @@
+qvss_version: "1.0"
+qv_set_id: "example_minimal_qv_set"
+version: "1.0.0"
+title: "Minimal QV set"
+status: "active"
+
+inputs:
+  fields:
+    quality:
+      source: "implementation"
+      datatype: "number"
+      cardinality: "single"
+      missing: "unknown"
+
+rules:
+  minimum_quality:
+    field: "quality"
+    operator: ">="
+    value: 20
+    datatype: "number"
+    missing: "unknown"
+
+qualification:
+  rule: "minimum_quality"

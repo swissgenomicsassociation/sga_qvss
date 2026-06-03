@@ -1,0 +1,106 @@
+{
+  "qvss_version": "1.0",
+  "truth_table": [
+    {
+      "expression": "all_of",
+      "inputs": [
+        true,
+        true
+      ],
+      "expected": true
+    },
+    {
+      "expression": "all_of",
+      "inputs": [
+        true,
+        "unknown"
+      ],
+      "expected": "unknown"
+    },
+    {
+      "expression": "all_of",
+      "inputs": [
+        true,
+        false
+      ],
+      "expected": false
+    },
+    {
+      "expression": "all_of",
+      "inputs": [
+        false,
+        "unknown"
+      ],
+      "expected": false
+    },
+    {
+      "expression": "any_of",
+      "inputs": [
+        false,
+        false
+      ],
+      "expected": false
+    },
+    {
+      "expression": "any_of",
+      "inputs": [
+        false,
+        "unknown"
+      ],
+      "expected": "unknown"
+    },
+    {
+      "expression": "any_of",
+      "inputs": [
+        true,
+        "unknown"
+      ],
+      "expected": true
+    },
+    {
+      "expression": "none_of",
+      "inputs": [
+        false,
+        false
+      ],
+      "expected": true
+    },
+    {
+      "expression": "none_of",
+      "inputs": [
+        false,
+        "unknown"
+      ],
+      "expected": "unknown"
+    },
+    {
+      "expression": "none_of",
+      "inputs": [
+        true,
+        "unknown"
+      ],
+      "expected": false
+    },
+    {
+      "expression": "not",
+      "inputs": [
+        true
+      ],
+      "expected": false
+    },
+    {
+      "expression": "not",
+      "inputs": [
+        false
+      ],
+      "expected": true
+    },
+    {
+      "expression": "not",
+      "inputs": [
+        "unknown"
+      ],
+      "expected": "unknown"
+    }
+  ]
+}

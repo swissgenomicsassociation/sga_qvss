@@ -1,0 +1,30 @@
+qvss_version: "1.0"
+qv_set_id: "example_variant_flag_exclusion"
+version: "1.0.0"
+title: "Variant flag exclusion example"
+status: "active"
+
+inputs:
+  fields:
+    FILTER:
+      source: "VCF"
+      path: "FILTER"
+      datatype: "list"
+      cardinality: "single"
+      missing: "fail"
+
+rules:
+  no_low_confidence_flag:
+    logic: "not"
+    conditions:
+      - field: "FILTER"
+        operator: "contains"
+        value: "low_confidence"
+        datatype: "list"
+        missing: "fail"
+
+qualification:
+  rule: "no_low_confidence_flag"
+
+notes:
+  - "This demonstrates must-not-contain logic using not around contains."

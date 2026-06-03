@@ -1,0 +1,33 @@
+{
+  "qv_set_id": "example_variant_flag_exclusion",
+  "records": [
+    {
+      "record_id": "v1",
+      "FILTER": [
+        "PASS"
+      ],
+      "expected_rule_outcomes": {
+        "no_low_confidence_flag": true
+      },
+      "expected_qualification": true
+    },
+    {
+      "record_id": "v2",
+      "FILTER": [
+        "low_confidence"
+      ],
+      "expected_rule_outcomes": {
+        "no_low_confidence_flag": false
+      },
+      "expected_qualification": false
+    },
+    {
+      "record_id": "v3",
+      "expected_rule_outcomes": {
+        "no_low_confidence_flag": true
+      },
+      "expected_qualification": true,
+      "note": "Inner contains has missing: fail, therefore not(fail) is true."
+    }
+  ]
+}

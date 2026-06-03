@@ -1,0 +1,70 @@
+qvss_version: "1.0"
+qv_set_id: "example_secondary_findings_panel"
+version: "1.0.0"
+title: "Secondary findings panel qualification"
+status: "active"
+
+inputs:
+  fields:
+    gene:
+      source: "annotation"
+      path: "SYMBOL"
+      datatype: "string"
+      cardinality: "single"
+      missing: "unknown"
+    classification:
+      source: "laboratory"
+      path: "CLASS"
+      datatype: "enum"
+      cardinality: "single"
+      missing: "unknown"
+    report_flags:
+      source: "laboratory"
+      datatype: "list"
+      cardinality: "single"
+      missing: "fail"
+  resources:
+    secondary_findings_genes:
+      type: "gene_list"
+      source: "../../resources/secondary_findings_genes_v3_3_example.txt"
+      version: "3.3-example"
+      checksum_sha256: "318393b4259e2ac7a1be59364fc15ec2eb27f1db8a8f2356c920896ee06de8c2"
+
+rules:
+  in_secondary_findings_gene:
+    field: "gene"
+    operator: "in"
+    value:
+      resource: "secondary_findings_genes"
+    datatype: "string"
+    missing: "unknown"
+  pathogenic_or_likely_pathogenic:
+    logic: "any_of"
+    conditions:
+      - field: "classification"
+        operator: "=="
+        value: "P"
+        datatype: "enum"
+        missing: "unknown"
+      - field: "classification"
+        operator: "=="
+        value: "LP"
+        datatype: "enum"
+        missing: "unknown"
+  not_suppressed:
+    logic: "not"
+    conditions:
+      - field: "report_flags"
+        operator: "contains"
+        value: "suppress_from_report"
+        datatype: "list"
+        missing: "fail"
+  final_qualification:
+    logic: "all_of"
+    conditions:
+      - ref: "in_secondary_findings_gene"
+      - ref: "pathogenic_or_likely_pathogenic"
+      - ref: "not_suppressed"
+
+qualification:
+  rule: "final_qualification"

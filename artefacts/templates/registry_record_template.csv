@@ -1,0 +1,2 @@
+qv_set_id,qv_set_version,qvss_version,status,release_date,checksum_type,checksum_sha256,file,profiles,extensions,authors,licence,description
+example_minimal_qv_set,1.0.0,1.0,active,2026-01-01,file-bytes,,example_minimal_qv_set.yaml,,,Swiss Genomics Association,MIT,Minimal QVSS example

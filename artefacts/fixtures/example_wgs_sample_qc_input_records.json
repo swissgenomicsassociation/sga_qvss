@@ -1,0 +1,31 @@
+{
+  "qv_set_id": "example_wgs_sample_qc",
+  "records": [
+    {
+      "sample_id": "s1",
+      "mean_depth": 35,
+      "pct_genome_20x": 0.97,
+      "contamination": 0.01,
+      "sample_flags": [],
+      "expected_qualification": true
+    },
+    {
+      "sample_id": "s2",
+      "mean_depth": 22,
+      "pct_genome_20x": 0.91,
+      "contamination": 0.01,
+      "sample_flags": [],
+      "expected_qualification": false
+    },
+    {
+      "sample_id": "s3",
+      "mean_depth": 35,
+      "pct_genome_20x": 0.97,
+      "contamination": 0.01,
+      "sample_flags": [
+        "sample_swap_suspected"
+      ],
+      "expected_qualification": false
+    }
+  ]
+}

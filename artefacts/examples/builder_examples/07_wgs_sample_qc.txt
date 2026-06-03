@@ -1,0 +1,15 @@
+meta qv_set_id="example_wgs_sample_qc"
+meta version="1.0.0"
+meta title="WGS sample QC qualification"
+meta status="active"
+filter sufficient_mean_depth field=mean_depth operator=">=" value=30 desc="Minimum mean genome depth"
+filter sufficient_20x_coverage field=pct_genome_20x operator=">=" value=0.95 desc="Minimum fraction of genome covered at 20x"
+filter low_contamination field=contamination operator="<=" value=0.03 desc="Maximum contamination estimate"
+criteria no_sample_failure_flag logic=not desc="Sample must not contain a sample swap flag"
+criteria no_sample_failure_flag field=sample_flags operator="contains" value=sample_swap_suspected missing=fail
+criteria final_qualification logic=and desc="Sample-level WGS QC qualification"
+criteria final_qualification ref=sufficient_mean_depth
+criteria final_qualification ref=sufficient_20x_coverage
+criteria final_qualification ref=low_contamination
+criteria final_qualification ref=no_sample_failure_flag
+note "This example applies to sample-level QC metrics rather than variant-level records."
