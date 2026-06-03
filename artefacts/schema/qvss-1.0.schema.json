@@ -9,91 +9,257 @@
     { "required": ["qv_set_id"] },
     { "required": ["meta"] }
   ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": { "const": "active" }
+        },
+        "required": ["status"]
+      },
+      "then": {
+        "anyOf": [
+          { "required": ["rules"] },
+          { "required": ["filters"] },
+          { "required": ["criteria"] }
+        ]
+      }
+    },
+    {
+      "if": {
+        "not": {
+          "properties": {
+            "status": { "enum": ["deprecated", "withdrawn"] }
+          },
+          "required": ["status"]
+        }
+      },
+      "then": {
+        "anyOf": [
+          { "required": ["rules"] },
+          { "required": ["filters"] },
+          { "required": ["criteria"] }
+        ]
+      }
+    }
+  ],
   "properties": {
-    "qvss_version": { "const": "1.0" },
-    "qv_set_id": { "type": "string", "minLength": 1 },
-    "version": { "type": "string", "minLength": 1 },
-    "title": { "type": "string", "minLength": 1 },
-    "description": { "type": "string" },
-    "created": { "type": "string" },
-    "authors": { "type": "array", "items": { "type": "string" } },
-    "licence": { "type": "string" },
-    "status": { "type": "string", "enum": ["draft", "active", "deprecated", "withdrawn"] },
-    "tags": { "type": "array", "items": { "type": "string" } },
+    "qvss_version": {
+      "const": "1.0"
+    },
+    "qv_set_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "description": {
+      "type": "string"
+    },
+    "created": {
+      "type": "string"
+    },
+    "authors": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "licence": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "active", "deprecated", "withdrawn"]
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
     "meta": {
       "type": "object",
       "additionalProperties": true,
       "properties": {
-        "qv_set_id": { "type": "string", "minLength": 1 },
-        "version": { "type": "string", "minLength": 1 },
-        "title": { "type": "string", "minLength": 1 }
+        "qv_set_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        }
       }
     },
-    "context": { "type": "object", "additionalProperties": true },
+    "context": {
+      "type": "object",
+      "additionalProperties": true
+    },
     "inputs": {
       "type": "object",
       "additionalProperties": true,
       "properties": {
-        "fields": { "type": "object", "additionalProperties": { "$ref": "#/$defs/fieldDeclaration" } },
-        "resources": { "type": "object", "additionalProperties": { "$ref": "#/$defs/resourceDeclaration" } }
+        "fields": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/fieldDeclaration"
+          }
+        },
+        "resources": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/resourceDeclaration"
+          }
+        }
       }
     },
-    "rules": { "type": "object", "minProperties": 1, "additionalProperties": { "$ref": "#/$defs/rule" } },
-    "filters": { "type": "object", "additionalProperties": { "$ref": "#/$defs/rule" } },
-    "criteria": { "type": "object", "additionalProperties": { "$ref": "#/$defs/rule" } },
+    "rules": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "$ref": "#/$defs/rule"
+      }
+    },
+    "filters": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "$ref": "#/$defs/rule"
+      }
+    },
+    "criteria": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "$ref": "#/$defs/rule"
+      }
+    },
     "qualification": {
       "type": "object",
       "required": ["rule"],
       "additionalProperties": true,
-      "properties": { "rule": { "type": "string", "minLength": 1 } }
+      "properties": {
+        "rule": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
     },
-    "descriptions": { "type": "object", "additionalProperties": { "type": "string" } },
-    "notes": { "type": "array", "items": { "type": "string" } },
-    "profiles": { "type": "array", "items": { "$ref": "#/$defs/profileOrExtension" } },
-    "extensions": { "type": "array", "items": { "$ref": "#/$defs/profileOrExtension" } }
+    "descriptions": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "profiles": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/profileOrExtension"
+      }
+    },
+    "extensions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/profileOrExtension"
+      }
+    }
   },
   "$defs": {
-    "datatype": { "type": "string", "enum": ["string", "number", "integer", "boolean", "date", "enum", "list", "object"] },
-    "missingBehaviour": { "type": "string", "enum": ["fail", "pass", "unknown", "error"] },
-    "operator": { "type": "string", "enum": ["==", "!=", "<", "<=", ">", ">=", "in", "not_in", "exists", "not_exists", "contains", "matches", "overlaps"] },
+    "datatype": {
+      "type": "string",
+      "enum": ["string", "number", "integer", "boolean", "date", "enum", "list", "object"]
+    },
+    "missingBehaviour": {
+      "type": "string",
+      "enum": ["fail", "pass", "unknown", "error"]
+    },
+    "operator": {
+      "type": "string",
+      "enum": ["==", "!=", "<", "<=", ">", ">=", "in", "not_in", "exists", "not_exists", "contains", "matches", "overlaps"]
+    },
     "fieldDeclaration": {
       "type": "object",
       "additionalProperties": true,
       "properties": {
-        "source": { "type": "string" },
-        "path": { "type": "string" },
-        "datatype": { "$ref": "#/$defs/datatype" },
-        "cardinality": { "type": "string" },
-        "missing": { "$ref": "#/$defs/missingBehaviour" }
+        "source": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "datatype": {
+          "$ref": "#/$defs/datatype"
+        },
+        "cardinality": {
+          "type": "string"
+        },
+        "missing": {
+          "$ref": "#/$defs/missingBehaviour"
+        }
       }
     },
     "resourceDeclaration": {
       "type": "object",
       "additionalProperties": true,
       "properties": {
-        "type": { "type": "string" },
-        "source": { "type": "string" },
-        "reference": { "type": "string" },
-        "version": { "type": "string" },
-        "checksum_sha256": { "type": "string" },
-        "interval_convention": { "type": "string" },
-        "minimum_overlap_bp": { "type": "integer", "minimum": 0 }
+        "type": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        },
+        "reference": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "checksum_sha256": {
+          "type": "string"
+        },
+        "interval_convention": {
+          "type": "string"
+        },
+        "minimum_overlap_bp": {
+          "type": "integer",
+          "minimum": 0
+        }
       }
     },
     "profileOrExtension": {
-      "oneOf": [
-        { "type": "string", "minLength": 1 },
-        {
-          "type": "object",
-          "required": ["name", "version"],
-          "additionalProperties": true,
-          "properties": {
-            "id": { "type": "string" },
-            "name": { "type": "string", "minLength": 1 },
-            "version": { "type": "string", "minLength": 1 }
-          }
+      "type": "object",
+      "required": ["name", "version"],
+      "additionalProperties": true,
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
         }
-      ]
+      }
     },
     "rule": {
       "type": "object",
@@ -103,16 +269,55 @@
         { "required": ["logic", "conditions"] },
         { "required": ["type"] }
       ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "logic": { "const": "not" }
+            },
+            "required": ["logic"]
+          },
+          "then": {
+            "properties": {
+              "conditions": {
+                "minItems": 1,
+                "maxItems": 1
+              }
+            }
+          }
+        }
+      ],
       "properties": {
-        "description": { "type": "string" },
-        "field": { "type": "string" },
-        "operator": { "$ref": "#/$defs/operator" },
+        "description": {
+          "type": "string"
+        },
+        "field": {
+          "type": "string"
+        },
+        "operator": {
+          "$ref": "#/$defs/operator"
+        },
         "value": {},
-        "datatype": { "$ref": "#/$defs/datatype" },
-        "missing": { "$ref": "#/$defs/missingBehaviour" },
-        "logic": { "type": "string", "enum": ["all_of", "any_of", "none_of", "not"] },
-        "conditions": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/condition" } },
-        "type": { "type": "string" }
+        "datatype": {
+          "$ref": "#/$defs/datatype"
+        },
+        "missing": {
+          "$ref": "#/$defs/missingBehaviour"
+        },
+        "logic": {
+          "type": "string",
+          "enum": ["all_of", "any_of", "none_of", "not"]
+        },
+        "conditions": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/condition"
+          }
+        },
+        "type": {
+          "type": "string"
+        }
       }
     },
     "condition": {
@@ -124,16 +329,55 @@
         { "required": ["logic", "conditions"] },
         { "required": ["type"] }
       ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "logic": { "const": "not" }
+            },
+            "required": ["logic"]
+          },
+          "then": {
+            "properties": {
+              "conditions": {
+                "minItems": 1,
+                "maxItems": 1
+              }
+            }
+          }
+        }
+      ],
       "properties": {
-        "ref": { "type": "string" },
-        "field": { "type": "string" },
-        "operator": { "$ref": "#/$defs/operator" },
+        "ref": {
+          "type": "string"
+        },
+        "field": {
+          "type": "string"
+        },
+        "operator": {
+          "$ref": "#/$defs/operator"
+        },
         "value": {},
-        "datatype": { "$ref": "#/$defs/datatype" },
-        "missing": { "$ref": "#/$defs/missingBehaviour" },
-        "logic": { "type": "string", "enum": ["all_of", "any_of", "none_of", "not"] },
-        "conditions": { "type": "array", "items": { "$ref": "#/$defs/condition" } },
-        "type": { "type": "string" }
+        "datatype": {
+          "$ref": "#/$defs/datatype"
+        },
+        "missing": {
+          "$ref": "#/$defs/missingBehaviour"
+        },
+        "logic": {
+          "type": "string",
+          "enum": ["all_of", "any_of", "none_of", "not"]
+        },
+        "conditions": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/condition"
+          }
+        },
+        "type": {
+          "type": "string"
+        }
       }
     }
   }
