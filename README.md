@@ -127,3 +127,33 @@ The helper checks JSON Schema validity and a small set of semantic rules used by
 ## Checksum policy
 
 QVSS 1.0 registries should state whether a checksum applies to exact released file bytes or to a canonical representation. This package uses `file-bytes` checksums.
+
+
+## Cite
+
+The SGA-QVSS-1.0 citation will appear here once officially published.
+
+## Further reading
+
+For further reading on QV you can find or cite the following source, although citation is not necessary:  
+
+Dylan Lawless, Ali Saadat, Mariam Ait Oumelloul, Simon Boutry, Veronika Stadler, Sabine Österle, Jan Armida, David Haerry, D Sean Froese, Luregn J Schlapbach, Jacques Fellay, **Application of qualifying variants for genomic analysis**, *Bioinformatics*, Volume 42, Issue 2, February 2026, btaf676, <https://doi.org/10.1093/bioinformatics/btaf676>.
+
+```
+@article{lawless2026application,
+    author = {Lawless, Dylan and Saadat, Ali and Oumelloul, Mariam Ait and Boutry, Simon and Stadler, Veronika and Österle, Sabine and Armida, Jan and Haerry, David and Froese, D Sean and Schlapbach, Luregn J and Fellay, Jacques},
+    title = {Application of qualifying variants for genomic analysis},
+    journal = {Bioinformatics},
+    volume = {42},
+    number = {2},
+    pages = {btaf676},
+    year = {2026},
+    month = {02},
+    issn = {1367-4811},
+    doi = {10.1093/bioinformatics/btaf676},
+    url = {https://doi.org/10.1093/bioinformatics/btaf676},
+}
+```
+
+
+
